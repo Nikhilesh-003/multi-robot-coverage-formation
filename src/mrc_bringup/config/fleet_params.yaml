@@ -1,0 +1,45 @@
+# Parameters for the base-station fleet nodes (same file for sim and hardware).
+fleet_monitor:
+  ros__parameters:
+    rate: 10.0
+    max_pose_age: 1.0
+    robot_radius: 0.24
+
+coverage_coordinator:
+  ros__parameters:
+    cell_size: 0.6          # lane spacing / effective tool width [m]
+    clearance: 0.35         # lanes keep this far from obstacles [m]
+    coverage_radius: 0.32
+    zone_cols: 3            # 3 x 2 = 6 zones for 3 robots -> dynamic re-assignment matters
+    zone_rows: 2
+    lane_direction: auto
+    auto_start: false       # start with: ros2 service call /fleet/start_coverage std_srvs/srv/Trigger
+    return_home: true
+    goal_timeout: 90.0
+    max_attempts: 3
+    min_steal_goals: 4
+    offline_after: 5.0
+
+formation_controller:
+  ros__parameters:
+    leader: robot1
+    followers: [robot2, robot3]
+    # wedge ("V"): followers 0.8 m behind, 0.7 m to each side of the leader
+    offsets: [-0.8, 0.7, -0.8, -0.7]
+    # leader route (map frame, x,y pairs): east along y=-0.9, U-turn of radius 0.9 m
+    # around (2.5, 0), back west along y=+0.9. Stays inside the obstacle-free band.
+    route: [-3.0, -0.9,  2.5, -0.9,  2.95, -0.78,  3.28, -0.45,  3.4, 0.0,
+            3.28, 0.45,  2.95, 0.78,  2.5, 0.9,  -2.5, 0.9]
+    leader_speed_pct: 50.0  # outer follower in the U-turn needs ~2x leader speed
+    control_rate: 20.0
+    lookahead: 0.20         # look-ahead point l [m] (feedback-linearisation controller)
+    k_p: 0.8                # look-ahead point gain [1/s]
+    v_max: 0.26
+    w_max: 1.5
+    slow_error: 0.4         # leader speed -> 20% as the worst follower error -> 0.4 m
+    min_separation: 0.50
+    settle_tolerance: 0.12
+    settle_timeout: 30.0
+    assemble_timeout: 120.0
+    pose_timeout: 1.0
+    auto_start: false

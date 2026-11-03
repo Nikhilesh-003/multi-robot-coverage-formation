@@ -1,0 +1,5 @@
+<library path="mrc_peer_layer">
+  <class type="mrc_costmap_plugins::PeerLayer" base_class_type="nav2_costmap_2d::Layer">
+    <description>Marks other fleet robots (from a PoseArray) as lethal discs.</description>
+  </class>
+</library>

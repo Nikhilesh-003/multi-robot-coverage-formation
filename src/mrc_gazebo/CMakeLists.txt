@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.8)
+project(mrc_gazebo)
+find_package(ament_cmake REQUIRED)
+install(DIRECTORY config launch maps worlds DESTINATION share/${PROJECT_NAME})
+install(PROGRAMS scripts/generate_arena.py DESTINATION lib/${PROJECT_NAME})
+ament_package()

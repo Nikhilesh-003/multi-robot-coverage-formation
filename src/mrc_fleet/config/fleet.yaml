@@ -1,0 +1,7 @@
+# Fleet definition shared by every launch file (sim, nav, coordinator, hardware).
+# name   -> ROS namespace (/robot1/...) AND TF frame prefix (robot1/base_footprint)
+# x,y,yaw -> spawn pose in sim / AMCL initial pose (map frame) on hardware
+robots:
+  - {name: robot1, x: -4.2, y:  0.0, yaw: 0.0}
+  - {name: robot2, x: -4.2, y:  1.1, yaw: 0.0}
+  - {name: robot3, x: -4.2, y: -1.1, yaw: 0.0}
