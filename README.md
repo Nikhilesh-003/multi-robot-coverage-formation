@@ -2,6 +2,8 @@
 
 **ROS 2 Jazzy · Nav2 · Gazebo Harmonic · Python · C++**
 
+📖 **Article:** [Three robots, one map: multi-robot coverage and formation control](https://nikhilesh-003.github.io/multi-robot-blog/)
+
 Three TurtleBot3 Waffle robots in Gazebo, each running its own namespaced Nav2 stack. They do two missions:
 
 1. **Collaborative coverage.** A central coordinator splits the map into zones and assigns them to robots as the mission runs, so the fleet covers the whole area without two robots sweeping the same zone.
