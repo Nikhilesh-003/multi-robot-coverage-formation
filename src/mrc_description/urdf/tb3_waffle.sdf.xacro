@@ -379,7 +379,7 @@
       </link>
 
 
-      <!-- Visual-only ID disc for the overhead camera. Sits at z=0.20 m, above the
+      <!-- Visual-only coloured ID disc to tell the robots apart. Sits at z=0.20 m, above the
            lidar scan plane (z=0.15 m), so it is never seen by any robot's lidar. -->
       <link name="id_marker">
         <pose>-0.064 0 0.20 0 0 0</pose>

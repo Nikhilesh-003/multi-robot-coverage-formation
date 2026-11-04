@@ -76,27 +76,6 @@ CYL = """    <model name="{name}">
     </model>
 """
 
-# Top-down camera used only for documentation snapshots (bridged to /overhead_camera/image).
-# Pitch +90 deg looks straight down; yaw +90 deg puts world +y at the top of the image.
-CAMERA = """    <model name="overhead_camera">
-      <static>true</static>
-      <pose>0 0 {z:.2f} 0 1.5708 1.5708</pose>
-      <link name="link">
-        <sensor name="overhead_camera" type="camera">
-          <always_on>true</always_on>
-          <update_rate>{rate}</update_rate>
-          <topic>overhead_camera/image</topic>
-          <camera>
-            <horizontal_fov>{hfov}</horizontal_fov>
-            <image><width>{width}</width><height>{height}</height><format>R8G8B8</format></image>
-            <clip><near>0.5</near><far>30</far></clip>
-          </camera>
-        </sensor>
-      </link>
-    </model>
-"""
-
-
 def main():
     cfg = yaml.safe_load(open(os.path.join(PKG, 'config', 'arena.yaml')))
     name = cfg['name']
@@ -122,7 +101,6 @@ def main():
         out.append(BOX.format(name=b[0], x=b[1], y=b[2], z=b[5] / 2, sx=b[3], sy=b[4], h=b[5], c=col))
     for c in cyls:
         out.append(CYL.format(name=c[0], x=c[1], y=c[2], z=c[4] / 2, r=c[3], h=c[4], c='0.2 0.45 0.7 1'))
-    out.append(CAMERA.format(**cfg['overhead_camera']))
     out.append('  </world>\n</sdf>\n')
     world_path = os.path.join(PKG, 'worlds', f'{name}.sdf')
     open(world_path, 'w').write(''.join(out))

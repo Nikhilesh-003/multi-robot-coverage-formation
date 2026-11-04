@@ -93,7 +93,7 @@ class CoverageCoordinator(Node):
         p('min_steal_goals', 4)
         p('offline_after', 5.0)      # s without pose -> robot offline
         p('sweep_up', True)          # final pass over cells that are still uncovered
-        p('report_path', os.path.expanduser('~/multi_robot_ws/snapshots/coverage_report.json'))
+        p('report_path', '')   # optional JSON summary file; empty = don't write one
         gp = lambda n: self.get_parameter(n).value  # noqa: E731
 
         self.cell_size = gp('cell_size')
@@ -595,6 +595,8 @@ class CoverageCoordinator(Node):
                 f"cells), overlap {s['overlap_pct']}%, t={s['elapsed_s']}s")
 
     def write_report(self):
+        if not self.report_path:
+            return
         try:
             os.makedirs(os.path.dirname(self.report_path), exist_ok=True)
             s = self.stats()

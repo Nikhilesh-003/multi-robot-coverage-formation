@@ -4,8 +4,7 @@ Per robot <name>:
   * Gazebo model <name>, topics /<name>/{scan,odom,imu,cmd_vel,joint_states}
   * TF frames prefixed '<name>/' and published on the shared /tf
   * robot_state_publisher in namespace /<name> with frame_prefix '<name>/'
-Shared: a single /clock bridge (one per robot would triple-publish the clock)
-and the overhead documentation camera /overhead_camera/image.
+Shared: a single /clock bridge (one per robot would triple-publish the clock).
 """
 import os
 import tempfile
@@ -23,7 +22,7 @@ from launch_ros.actions import Node
 from mrc_fleet.fleet_config import default_fleet_file, load_fleet
 
 
-# id-disc colours seen by the overhead camera (same order as snapshot.ROBOT_COLORS)
+# colour of each robot's ID disc, in fleet.yaml order (same as the RViz markers)
 MARKER_COLORS = ['0.90 0.10 0.29 1', '0.24 0.71 0.29 1', '0.26 0.39 0.85 1',
                  '0.96 0.51 0.19 1', '0.57 0.12 0.71 1', '0.26 0.83 0.96 1']
 
@@ -62,8 +61,7 @@ def launch_setup(context):
                 get_package_share_directory('ros_gz_sim'), 'launch', 'gz_sim.launch.py')),
             launch_arguments={'gz_args': gz_args, 'on_exit_shutdown': 'true'}.items()),
         Node(package='ros_gz_bridge', executable='parameter_bridge', name='sim_bridge',
-             arguments=['/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock',
-                        '/overhead_camera/image@sensor_msgs/msg/Image[gz.msgs.Image'],
+             arguments=['/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock'],
              parameters=[{'use_sim_time': True}], output='screen'),
     ]
 

@@ -57,7 +57,7 @@ Three TurtleBot3 Waffle robots in Gazebo, each running its own namespaced Nav2 s
 | `mrc_gazebo` | Arena generator (world + matching map), simulation launch, ROS–Gazebo bridges |
 | `mrc_navigation` | Templated Nav2 parameters, per-robot Nav2 launch, shared map server |
 | `mrc_costmap_plugins` | `PeerLayer` costmap plugin (C++) |
-| `mrc_fleet` | Coordinator, coverage planner, formation controller, fleet monitor, demo runner, unit tests |
+| `mrc_fleet` | Coordinator, coverage planner, formation controller, fleet monitor, unit tests |
 | `mrc_bringup` | Simulation, base-station and real-robot launch files, fleet parameters, RViz config |
 
 ## Run it
@@ -73,7 +73,13 @@ colcon build --symlink-install
 source install/setup.bash
 
 ros2 launch mrc_bringup sim_bringup.launch.py   # terminal 1: Gazebo, 3x Nav2, coordinator, RViz
-ros2 run mrc_fleet demo                         # terminal 2: coverage, then formation; exit code = pass/fail
+```
+
+Once all three robots are localized, start the missions from a second terminal:
+
+```bash
+ros2 service call /fleet/start_coverage std_srvs/srv/Trigger    # coverage mission
+ros2 service call /fleet/start_formation std_srvs/srv/Trigger   # formation mission, after coverage finishes
 ```
 
 Unit tests: `colcon test --packages-select mrc_fleet`.

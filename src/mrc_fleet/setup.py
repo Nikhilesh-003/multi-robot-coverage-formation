@@ -22,11 +22,9 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'snapshot = mrc_fleet.snapshot:main',
             'fleet_monitor = mrc_fleet.fleet_monitor:main',
             'coverage_coordinator = mrc_fleet.coverage_coordinator:main',
             'formation_controller = mrc_fleet.formation_controller:main',
-            'demo = mrc_fleet.demo:main',
         ],
     },
 )
